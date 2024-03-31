@@ -65,7 +65,7 @@ class WalletController extends Controller
             $wallet = Wallet::where('type', $request->input('type'))->where('user_id', Auth::id())->first();
             if ($wallet == NULL) {
                 return response()->json([
-                    'erreur' => 'Wallet Not Found!',
+                    'message' => 'Wallet Not Found!',
                 ], 401);
             }
 

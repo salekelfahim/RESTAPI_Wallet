@@ -18,7 +18,7 @@ class TransactionController extends Controller
         if ($user->role_id === 1) {
 
             $transactions = Transaction::get();
-            
+
             return response()->json([
                 'transactions' => $transactions,
             ], 201);

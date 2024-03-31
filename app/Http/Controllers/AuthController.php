@@ -66,7 +66,6 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
-                'wallets' => $user->wallets
             ], 200);
 
         } catch (\Exception $e) {
