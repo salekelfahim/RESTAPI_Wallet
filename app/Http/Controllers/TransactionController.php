@@ -17,7 +17,8 @@ class TransactionController extends Controller
 
         if ($user->role_id === 1) {
 
-            $transactions = Transaction::get();
+            $transactions = Transaction::with('user')
+                ->get();
 
             return response()->json([
                 'transactions' => $transactions,
@@ -26,6 +27,7 @@ class TransactionController extends Controller
 
         $transactions = Transaction::where('sender', $user->id)
             ->orWhere('receiver', $user->id)
+            ->with('user')
             ->get();
 
         if ($transactions === NULL) {

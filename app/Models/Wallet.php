@@ -15,4 +15,8 @@ class Wallet extends Model
         'balance',
         'user_id',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

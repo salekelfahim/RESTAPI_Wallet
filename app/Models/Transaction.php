@@ -14,4 +14,8 @@ class Transaction extends Model
         'sender',
         'receiver',
     ];
+    
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

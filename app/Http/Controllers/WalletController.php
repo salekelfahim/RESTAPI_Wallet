@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
@@ -13,7 +14,9 @@ class WalletController extends Controller
 
     public function getUserWallets()
     {
-        $wallets = Wallet::where('user_id', Auth::id())->get();
+        $wallets = Wallet::where('user_id', Auth::id())
+                    ->with('user')
+                    ->get();
         return response()->json([
             'wallets' => $wallets,
         ], 200);
@@ -42,10 +45,12 @@ class WalletController extends Controller
                 'balance' => $request->input('balance')
             ]);
 
+            $id = DB::table('wallets')->where('id', $wallet->id)->value('id');
+
             return response()->json([
                 'message' => 'Wallet Created Successfully',
                 'wallet balance' => $wallet->balance,
-                'uuid' =>  $this->getId($wallet->id)
+                'uuid' => $id,
             ], 201);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
